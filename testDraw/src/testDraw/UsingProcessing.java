@@ -34,10 +34,6 @@ public class UsingProcessing extends PApplet{
 	
 	public static int currLevel = -1, floorY = 450,
 			width = 900, height = 600;
-	
-	public static String pathToLocal = 
-			"/Users/gillianyue/Documents/"
-			+ "eclipse-workspace/testDraw/";
 
     public static void main(String[] args) {
        PApplet.main("testDraw.UsingProcessing");
@@ -47,6 +43,7 @@ public class UsingProcessing extends PApplet{
         size(width, height);
         savedTime = millis();
         interval = 1000;
+        println("datapath: "+dataPath("/"));
     }
 
     public void setup(){
@@ -58,7 +55,8 @@ public class UsingProcessing extends PApplet{
         levelKeywords = new ArrayList<String>();
         levelKeywords.add("horse");
         
-        ducky = loadImage(pathToLocal+"ducky.png");
+        ducky = loadImage("../../ducky.png");
+        println(dataPath(""));
         levelColors[0] = new Color(126,76,55);
         
         SetUpThread su = new SetUpThread();
@@ -144,7 +142,7 @@ public class UsingProcessing extends PApplet{
     	String keyword = levelKeywords.get(l);
     	println("setting up...the keyword for level "+l+" is "+keyword);
     	//set up quick draw data for level, assuming ndjson file is there
-        qd = new QuickDraw(this, pathToLocal+"ndjson/"+
+        qd = new QuickDraw(this, "ndjson/"+
     keyword+".ndjson"); //will change the enemies generated
         qd.mode(0);
         
@@ -306,7 +304,7 @@ public class UsingProcessing extends PApplet{
                 NdjsonThread first = new NdjsonThread(0); 
                 first.start();
             //parse all possible object names
-         	categories = tp.readDoc(pathToLocal + "categories.txt");
+         	categories = tp.readDoc("categories.txt");
          	
          	for(int i=1; i<numLevels; i++) {
          		//randomly get keywords for each level
